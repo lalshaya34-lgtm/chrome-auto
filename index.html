@@ -4,187 +4,188 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#080b14">
+
 <title>G Clicker</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    body {
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: Arial, sans-serif;
-        color: white;
-        background:
-            radial-gradient(circle at top, #312e81, transparent 45%),
-            #070b14;
-    }
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    color: white;
+    background:
+        radial-gradient(circle at top, #312e81, transparent 45%),
+        #070b14;
+}
 
-    .app {
-        width: 92%;
-        max-width: 460px;
-        padding: 30px;
-        background: rgba(17, 24, 39, .96);
-        border: 1px solid #374151;
-        border-radius: 24px;
-        box-shadow: 0 25px 80px rgba(0,0,0,.55);
-    }
+.app {
+    width: 92%;
+    max-width: 460px;
+    padding: 30px;
+    background: rgba(17, 24, 39, .96);
+    border: 1px solid #374151;
+    border-radius: 24px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.55);
+}
 
-    .title {
-        text-align: center;
-        font-size: 32px;
-        font-weight: 800;
-    }
+.title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 800;
+}
 
-    .subtitle {
-        text-align: center;
-        color: #9ca3af;
-        margin-bottom: 25px;
-    }
+.subtitle {
+    text-align: center;
+    color: #9ca3af;
+    margin-bottom: 25px;
+}
 
-    .status {
-        text-align: center;
-        padding: 14px;
-        background: #0f172a;
-        border-radius: 14px;
-        margin-bottom: 25px;
-    }
+.status {
+    text-align: center;
+    padding: 14px;
+    background: #0f172a;
+    border-radius: 14px;
+    margin-bottom: 25px;
+}
 
-    #status {
-        color: #ef4444;
-        font-weight: bold;
-    }
+#status {
+    color: #ef4444;
+    font-weight: bold;
+}
 
-    #status.on {
-        color: #22c55e;
-    }
+#status.on {
+    color: #22c55e;
+}
 
-    .cps {
-        text-align: center;
-    }
+.cps {
+    text-align: center;
+}
 
-    #cpsValue {
-        font-size: 64px;
-        font-weight: 900;
-        color: #818cf8;
-    }
+#cpsValue {
+    font-size: 64px;
+    font-weight: 900;
+    color: #818cf8;
+}
 
-    .label {
-        color: #9ca3af;
-    }
+.label {
+    color: #9ca3af;
+}
 
-    input[type="range"] {
-        width: 100%;
-        margin: 25px 0;
-        accent-color: #6366f1;
-    }
+input[type="range"] {
+    width: 100%;
+    margin: 25px 0;
+    accent-color: #6366f1;
+}
 
-    #cpsInput {
-        width: 100%;
-        padding: 13px;
-        border: 1px solid #374151;
-        border-radius: 10px;
-        background: #0f172a;
-        color: white;
-        font-size: 18px;
-        text-align: center;
-    }
+#cpsInput {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    background: #0f172a;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+}
 
-    .presets {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-        margin-top: 15px;
-    }
+.presets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 15px;
+}
 
-    .preset {
-        padding: 10px 5px;
-        border: 0;
-        border-radius: 9px;
-        background: #374151;
-        color: white;
-        cursor: pointer;
-    }
+.preset {
+    padding: 10px 5px;
+    border: 0;
+    border-radius: 9px;
+    background: #374151;
+    color: white;
+    cursor: pointer;
+}
 
-    .preset:hover {
-        background: #4b5563;
-    }
+.preset:hover {
+    background: #4b5563;
+}
 
-    .main-button {
-        width: 100%;
-        margin-top: 22px;
-        padding: 17px;
-        border: 0;
-        border-radius: 12px;
-        background: #4f46e5;
-        color: white;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+.main-button {
+    width: 100%;
+    margin-top: 22px;
+    padding: 17px;
+    border: 0;
+    border-radius: 12px;
+    background: #4f46e5;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    .main-button:hover {
-        background: #6366f1;
-    }
+.main-button.running {
+    background: #dc2626;
+}
 
-    .main-button.running {
-        background: #dc2626;
-    }
+.test-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px;
+    border: 0;
+    border-radius: 12px;
+    background: #1f2937;
+    color: white;
+    cursor: pointer;
+}
 
-    .test-button {
-        width: 100%;
-        margin-top: 10px;
-        padding: 13px;
-        border: 0;
-        border-radius: 12px;
-        background: #1f2937;
-        color: white;
-        cursor: pointer;
-    }
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
 
-    .stats {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-top: 20px;
-    }
+.stat {
+    padding: 15px;
+    text-align: center;
+    background: #0f172a;
+    border-radius: 12px;
+}
 
-    .stat {
-        padding: 15px;
-        text-align: center;
-        background: #0f172a;
-        border-radius: 12px;
-    }
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+}
 
-    .stat-number {
-        font-size: 24px;
-        font-weight: bold;
-    }
+.stat-label {
+    color: #9ca3af;
+    font-size: 13px;
+    margin-top: 4px;
+}
 
-    .stat-label {
-        color: #9ca3af;
-        font-size: 13px;
-        margin-top: 4px;
-    }
+.shortcut {
+    text-align: center;
+    margin-top: 22px;
+    color: #9ca3af;
+    font-size: 14px;
+}
 
-    .shortcut {
-        text-align: center;
-        margin-top: 22px;
-        color: #9ca3af;
-        font-size: 14px;
-    }
-
-    kbd {
-        padding: 5px 9px;
-        border-radius: 6px;
-        background: #374151;
-        color: white;
-        font-weight: bold;
-    }
+kbd {
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: #374151;
+    color: white;
+    font-weight: bold;
+}
 </style>
 </head>
 
@@ -230,12 +231,10 @@
     </div>
 
     <div class="presets">
-
         <button class="preset" data-cps="1">1</button>
         <button class="preset" data-cps="10">10</button>
         <button class="preset" data-cps="50">50</button>
         <button class="preset" data-cps="100">100</button>
-
     </div>
 
     <button id="toggle" class="main-button">
@@ -287,7 +286,6 @@ const actualCpsDisplay = document.getElementById("actualCps");
 const testButton = document.getElementById("test");
 
 function getCPS() {
-
     let value = Number(cpsInput.value);
 
     if (!Number.isFinite(value)) {
@@ -318,9 +316,6 @@ function performClick() {
     clicksDisplay.textContent =
         totalClicks.toLocaleString();
 
-    /*
-      This generates the click inside this webpage.
-    */
     testButton.dispatchEvent(
         new MouseEvent("click", {
             bubbles: true,
@@ -342,11 +337,6 @@ function start() {
     toggle.classList.add("running");
 
     const cps = getCPS();
-
-    /*
-      Browsers limit timer precision at very high speeds.
-      The requested CPS is still used as the target.
-    */
     const interval = Math.max(1, 1000 / cps);
 
     timer = setInterval(performClick, interval);
@@ -387,10 +377,6 @@ function toggleClicker() {
 
 toggle.addEventListener("click", toggleClicker);
 
-testButton.addEventListener("click", function() {
-    // Test button itself doesn't start the clicker.
-});
-
 cpsSlider.addEventListener("input", function() {
     setCPS(this.value);
 });
@@ -407,7 +393,6 @@ document.querySelectorAll(".preset").forEach(function(button) {
 
 });
 
-/* G = start / stop */
 document.addEventListener("keydown", function(event) {
 
     if (
@@ -420,14 +405,19 @@ document.addEventListener("keydown", function(event) {
 
 });
 
-/* Measure actual browser click rate */
 setInterval(function() {
 
     actualCpsDisplay.textContent = clicksThisSecond;
-
     clicksThisSecond = 0;
 
 }, 1000);
+
+/* Register the service worker */
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function() {
+        navigator.serviceWorker.register("./sw.js");
+    });
+}
 
 </script>
 
