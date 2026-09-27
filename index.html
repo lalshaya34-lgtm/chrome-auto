@@ -1,87 +1,159 @@
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mouse Clicker Test</title>
+<title>G Auto Clicker</title>
 
 <style>
-    body {
-        margin: 0;
-        min-height: 100vh;
-        background: #101827;
-        color: white;
-        font-family: Arial, sans-serif;
-        text-align: center;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    .panel {
-        padding: 25px;
-    }
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #101827;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
 
-    button, input {
-        font-size: 18px;
-        padding: 12px;
-        margin: 6px;
-        border-radius: 8px;
-    }
+.container {
+    width: min(700px, 94%);
+    margin-top: 35px;
+}
 
-    button {
-        border: 0;
-        cursor: pointer;
-        background: #4f46e5;
-        color: white;
-        font-weight: bold;
-    }
+h1 {
+    text-align: center;
+}
 
-    #game {
-        position: relative;
-        height: 450px;
-        margin: 20px;
-        border: 3px solid #4f46e5;
-        border-radius: 15px;
-        background: #182235;
-        overflow: hidden;
-    }
+.card {
+    background: #182235;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
 
-    #target {
-        position: absolute;
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background: #22c55e;
-        border: 0;
-    }
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
 
-    #target:active {
-        background: #16a34a;
-    }
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    background: #0f172a;
+    color: white;
+    font-size: 18px;
+}
 
-    #status {
-        color: #ef4444;
-        font-weight: bold;
-    }
+button {
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 9px;
+    background: #4f46e5;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    #status.on {
-        color: #22c55e;
-    }
+button:hover {
+    background: #6366f1;
+}
+
+#stop {
+    background: #dc2626;
+}
+
+#stop:hover {
+    background: #ef4444;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.stat {
+    background: #0f172a;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+#status {
+    color: #ef4444;
+}
+
+#status.on {
+    color: #22c55e;
+}
+
+#testArea {
+    position: relative;
+    height: 350px;
+    border: 3px solid #4f46e5;
+    border-radius: 15px;
+    background: #0f172a;
+    overflow: hidden;
+}
+
+#target {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #22c55e;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+}
+
+#target:hover {
+    background: #16a34a;
+}
+
+.help {
+    color: #94a3b8;
+    line-height: 1.5;
+}
 </style>
 </head>
 
 <body>
 
-<div class="panel">
+<div class="container">
 
-    <h1>🖱️ Auto Clicker Test</h1>
+    <h1>🖱️ G Auto Clicker</h1>
 
-    <p>
-        Status:
-        <span id="status">OFF</span>
-    </p>
+    <div class="card">
 
-    <p>
-        CPS:
+        <label for="cps">Clicks Per Second (1–1000)</label>
+
         <input
             id="cps"
             type="number"
@@ -89,110 +161,166 @@
             max="1000"
             value="10"
         >
-    </p>
 
-    <button id="start">START</button>
+        <div class="controls">
 
-    <p>
-        Clicks:
-        <strong id="count">0</strong>
-    </p>
+            <button id="start">
+                START
+            </button>
 
-    <p>
-        Press <strong>G</strong> to start/stop.
-    </p>
+            <button id="stop">
+                STOP
+            </button>
 
-</div>
+        </div>
 
-<div id="game">
-    <button id="target"></button>
+        <div class="info">
+
+            <div class="stat">
+                Status
+                <span
+                    id="status"
+                    class="stat-number"
+                >
+                    OFF
+                </span>
+            </div>
+
+            <div class="stat">
+                Clicks
+                <span
+                    id="clickCount"
+                    class="stat-number"
+                >
+                    0
+                </span>
+            </div>
+
+        </div>
+
+        <p class="help">
+            Press <strong>G</strong> to start or stop the
+            auto-clicker. The page must be focused.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Test Area</h2>
+
+        <p class="help">
+            The green button is the target for this webpage.
+        </p>
+
+        <div id="testArea">
+
+            <button
+                id="target"
+                aria-label="Click target"
+            >
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
 <script>
 
-const startButton = document.getElementById("start");
-const status = document.getElementById("status");
 const cpsInput = document.getElementById("cps");
+const startButton = document.getElementById("start");
+const stopButton = document.getElementById("stop");
+const statusText = document.getElementById("status");
+const clickCount = document.getElementById("clickCount");
 const target = document.getElementById("target");
-const countDisplay = document.getElementById("count");
-const game = document.getElementById("game");
+const testArea = document.getElementById("testArea");
 
 let running = false;
 let timer = null;
-let count = 0;
+let clicks = 0;
 
 
-/* Put the target somewhere random */
+/* Get a valid CPS value */
 
-function moveTarget() {
+function getCPS() {
 
-    const maxX =
-        game.clientWidth - target.offsetWidth;
+    let cps = Number(cpsInput.value);
 
-    const maxY =
-        game.clientHeight - target.offsetHeight;
+    if (!Number.isFinite(cps)) {
+        cps = 10;
+    }
 
-    target.style.left =
-        Math.random() * maxX + "px";
+    cps = Math.round(cps);
 
-    target.style.top =
-        Math.random() * maxY + "px";
+    cps = Math.max(1, Math.min(1000, cps));
+
+    cpsInput.value = cps;
+
+    return cps;
 }
 
 
-/* The game's real click handler */
+/* Move the test target */
+
+function moveTarget() {
+
+    const padding = 10;
+
+    const maxX =
+        testArea.clientWidth -
+        target.offsetWidth -
+        padding;
+
+    const maxY =
+        testArea.clientHeight -
+        target.offsetHeight -
+        padding;
+
+    const x =
+        padding +
+        Math.random() *
+        Math.max(0, maxX - padding);
+
+    const y =
+        padding +
+        Math.random() *
+        Math.max(0, maxY - padding);
+
+    target.style.left = x + "px";
+    target.style.top = y + "px";
+}
+
+
+/* What happens when the target is clicked */
 
 target.addEventListener("click", function() {
 
-    count++;
+    clicks++;
 
-    countDisplay.textContent =
-        count.toLocaleString();
+    clickCount.textContent =
+        clicks.toLocaleString();
 
     moveTarget();
 
 });
 
 
-/* Get CPS safely */
-
-function getCPS() {
-
-    let value =
-        Number(cpsInput.value);
-
-    if (!Number.isFinite(value)) {
-        value = 10;
-    }
-
-    return Math.max(
-        1,
-        Math.min(1000, Math.round(value))
-    );
-}
-
-
 /* Start */
 
-function start() {
+function startClicker() {
 
-    if (running) return;
+    if (running) {
+        return;
+    }
+
+    const cps = getCPS();
 
     running = true;
 
-    status.textContent = "ON";
-    status.classList.add("on");
-
-    startButton.textContent = "STOP";
-
-    const delay =
-        Math.max(1, 1000 / getCPS());
-
-    /*
-       IMPORTANT:
-       This dispatches a click ONLY to
-       the target inside this webpage.
-    */
+    statusText.textContent = "ON";
+    statusText.classList.add("on");
 
     timer = setInterval(function() {
 
@@ -204,48 +332,41 @@ function start() {
             })
         );
 
-    }, delay);
+    }, Math.max(1, 1000 / cps));
+
 }
 
 
 /* Stop */
 
-function stop() {
+function stopClicker() {
 
     running = false;
 
-    clearInterval(timer);
-
-    timer = null;
-
-    status.textContent = "OFF";
-    status.classList.remove("on");
-
-    startButton.textContent = "START";
-}
-
-
-/* Toggle */
-
-function toggle() {
-
-    if (running) {
-        stop();
-    } else {
-        start();
+    if (timer !== null) {
+        clearInterval(timer);
+        timer = null;
     }
+
+    statusText.textContent = "OFF";
+    statusText.classList.remove("on");
 }
 
 
-/* Button */
+/* Buttons */
 
 startButton.addEventListener(
     "click",
-    toggle
+    startClicker
+);
+
+stopButton.addEventListener(
+    "click",
+    stopClicker
 );
 
 
-/* G shortcut */
+/* G keyboard shortcut */
 
 document.addEventListener(
     "keydown",
@@ -256,16 +377,33 @@ document.addEventListener(
             event.key === "G"
         ) {
 
+            /*
+             Don't trigger G while
+             typing in the CPS box.
+            */
+
+            if (
+                event.target.tagName === "INPUT" ||
+                event.target.tagName === "TEXTAREA"
+            ) {
+                return;
+            }
+
             event.preventDefault();
 
-            toggle();
+            if (running) {
+                stopClicker();
+            } else {
+                startClicker();
+            }
+
         }
 
     }
 );
 
 
-/* Initial position */
+/* Start with target in a random position */
 
 moveTarget();
 
