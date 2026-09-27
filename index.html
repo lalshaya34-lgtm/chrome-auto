@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#080b14">
 
@@ -22,40 +21,37 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
+    background: #080b14;
     color: white;
-    background:
-        radial-gradient(circle at top, #312e81, transparent 45%),
-        #070b14;
+    font-family: Arial, sans-serif;
 }
 
 .app {
     width: 92%;
-    max-width: 460px;
+    max-width: 450px;
+    background: #111827;
     padding: 30px;
-    background: rgba(17, 24, 39, .96);
-    border: 1px solid #374151;
     border-radius: 24px;
-    box-shadow: 0 25px 80px rgba(0,0,0,.55);
+    box-shadow: 0 20px 60px #0008;
 }
 
-.title {
+h1 {
     text-align: center;
+    margin: 0;
     font-size: 32px;
-    font-weight: 800;
 }
 
 .subtitle {
     text-align: center;
     color: #9ca3af;
-    margin-bottom: 25px;
+    margin: 8px 0 25px;
 }
 
 .status {
     text-align: center;
-    padding: 14px;
     background: #0f172a;
-    border-radius: 14px;
+    padding: 15px;
+    border-radius: 12px;
     margin-bottom: 25px;
 }
 
@@ -68,21 +64,21 @@ body {
     color: #22c55e;
 }
 
-.cps {
+.cps-display {
     text-align: center;
 }
 
-#cpsValue {
-    font-size: 64px;
-    font-weight: 900;
+#cpsNumber {
+    font-size: 60px;
+    font-weight: bold;
     color: #818cf8;
 }
 
-.label {
+.cps-label {
     color: #9ca3af;
 }
 
-input[type="range"] {
+#slider {
     width: 100%;
     margin: 25px 0;
     accent-color: #6366f1;
@@ -90,7 +86,7 @@ input[type="range"] {
 
 #cpsInput {
     width: 100%;
-    padding: 13px;
+    padding: 14px;
     border: 1px solid #374151;
     border-radius: 10px;
     background: #0f172a;
@@ -99,52 +95,42 @@ input[type="range"] {
     text-align: center;
 }
 
+button {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+#startButton {
+    margin-top: 20px;
+    padding: 18px;
+    background: #4f46e5;
+    font-size: 20px;
+}
+
+#startButton.running {
+    background: #dc2626;
+}
+
+#testButton {
+    margin-top: 10px;
+    padding: 13px;
+    background: #374151;
+}
+
 .presets {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
-    margin-top: 15px;
+    margin-top: 12px;
 }
 
 .preset {
-    padding: 10px 5px;
-    border: 0;
-    border-radius: 9px;
+    padding: 10px;
     background: #374151;
-    color: white;
-    cursor: pointer;
-}
-
-.preset:hover {
-    background: #4b5563;
-}
-
-.main-button {
-    width: 100%;
-    margin-top: 22px;
-    padding: 17px;
-    border: 0;
-    border-radius: 12px;
-    background: #4f46e5;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.main-button.running {
-    background: #dc2626;
-}
-
-.test-button {
-    width: 100%;
-    margin-top: 10px;
-    padding: 13px;
-    border: 0;
-    border-radius: 12px;
-    background: #1f2937;
-    color: white;
-    cursor: pointer;
 }
 
 .stats {
@@ -155,10 +141,10 @@ input[type="range"] {
 }
 
 .stat {
-    padding: 15px;
-    text-align: center;
     background: #0f172a;
     border-radius: 12px;
+    padding: 15px;
+    text-align: center;
 }
 
 .stat-number {
@@ -168,21 +154,20 @@ input[type="range"] {
 
 .stat-label {
     color: #9ca3af;
-    font-size: 13px;
+    font-size: 12px;
     margin-top: 4px;
 }
 
-.shortcut {
+.help {
     text-align: center;
-    margin-top: 22px;
+    margin-top: 20px;
     color: #9ca3af;
-    font-size: 14px;
 }
 
 kbd {
-    padding: 5px 9px;
-    border-radius: 6px;
     background: #374151;
+    padding: 5px 10px;
+    border-radius: 6px;
     color: white;
     font-weight: bold;
 }
@@ -193,10 +178,10 @@ kbd {
 
 <div class="app">
 
-    <div class="title">⚡ G Clicker</div>
+    <h1>⚡ G Clicker</h1>
 
     <div class="subtitle">
-        Fast browser clicker
+        1–1000 CPS
     </div>
 
     <div class="status">
@@ -204,63 +189,63 @@ kbd {
         <span id="status">OFF</span>
     </div>
 
-    <div class="cps">
+    <div class="cps-display">
 
-        <div id="cpsValue">10</div>
+        <div id="cpsNumber">10</div>
 
-        <div class="label">
+        <div class="cps-label">
             CLICKS PER SECOND
         </div>
 
-        <input
-            id="cpsSlider"
-            type="range"
-            min="1"
-            max="1000"
-            value="10"
-        >
-
-        <input
-            id="cpsInput"
-            type="number"
-            min="1"
-            max="1000"
-            value="10"
-        >
-
     </div>
+
+    <input
+        id="slider"
+        type="range"
+        min="1"
+        max="1000"
+        value="10"
+    >
+
+    <input
+        id="cpsInput"
+        type="number"
+        min="1"
+        max="1000"
+        value="10"
+    >
 
     <div class="presets">
-        <button class="preset" data-cps="1">1</button>
-        <button class="preset" data-cps="10">10</button>
-        <button class="preset" data-cps="50">50</button>
-        <button class="preset" data-cps="100">100</button>
+        <button class="preset" data-value="1">1</button>
+        <button class="preset" data-value="10">10</button>
+        <button class="preset" data-value="50">50</button>
+        <button class="preset" data-value="100">100</button>
     </div>
 
-    <button id="toggle" class="main-button">
+    <button id="startButton">
         START
     </button>
 
-    <button id="test" class="test-button">
+    <button id="testButton">
         TEST CLICK
     </button>
 
     <div class="stats">
 
         <div class="stat">
-            <div id="clicks" class="stat-number">0</div>
+            <div id="totalClicks" class="stat-number">0</div>
             <div class="stat-label">TOTAL CLICKS</div>
         </div>
 
         <div class="stat">
             <div id="actualCps" class="stat-number">0</div>
-            <div class="stat-label">CURRENT CPS</div>
+            <div class="stat-label">ACTUAL CPS</div>
         </div>
 
     </div>
 
-    <div class="shortcut">
-        Press <kbd>G</kbd> to start / stop
+    <div class="help">
+        Press <kbd>G</kbd> to START / STOP
     </div>
 
 </div>
@@ -274,54 +259,57 @@ let totalClicks = 0;
 let clicksThisSecond = 0;
 
 const status = document.getElementById("status");
-const toggle = document.getElementById("toggle");
+const startButton = document.getElementById("startButton");
 
-const cpsSlider = document.getElementById("cpsSlider");
+const slider = document.getElementById("slider");
 const cpsInput = document.getElementById("cpsInput");
-const cpsValue = document.getElementById("cpsValue");
+const cpsNumber = document.getElementById("cpsNumber");
 
-const clicksDisplay = document.getElementById("clicks");
+const totalClicksDisplay = document.getElementById("totalClicks");
 const actualCpsDisplay = document.getElementById("actualCps");
 
-const testButton = document.getElementById("test");
-
 function getCPS() {
-    let value = Number(cpsInput.value);
 
-    if (!Number.isFinite(value)) {
-        value = 10;
+    let cps = parseInt(cpsInput.value);
+
+    if (isNaN(cps)) {
+        cps = 10;
     }
 
-    return Math.max(1, Math.min(1000, Math.round(value)));
+    cps = Math.max(1, Math.min(1000, cps));
+
+    return cps;
 }
 
 function setCPS(value) {
 
-    value = Math.max(1, Math.min(1000, Math.round(Number(value))));
+    value = Math.max(
+        1,
+        Math.min(1000, parseInt(value) || 1)
+    );
 
-    cpsSlider.value = value;
+    slider.value = value;
     cpsInput.value = value;
-    cpsValue.textContent = value;
+    cpsNumber.textContent = value;
 
     if (running) {
-        restart();
+        stop();
+        start();
     }
 }
 
-function performClick() {
+function doClick() {
 
     totalClicks++;
     clicksThisSecond++;
 
-    clicksDisplay.textContent =
+    totalClicksDisplay.textContent =
         totalClicks.toLocaleString();
 
-    testButton.dispatchEvent(
-        new MouseEvent("click", {
-            bubbles: true,
-            cancelable: true
-        })
-    );
+    /*
+      This creates the click inside the app.
+    */
+    document.getElementById("testButton").click();
 }
 
 function start() {
@@ -333,13 +321,20 @@ function start() {
     status.textContent = "ON";
     status.classList.add("on");
 
-    toggle.textContent = "STOP";
-    toggle.classList.add("running");
+    startButton.textContent = "STOP";
+    startButton.classList.add("running");
 
     const cps = getCPS();
-    const interval = Math.max(1, 1000 / cps);
 
-    timer = setInterval(performClick, interval);
+    const interval = Math.max(
+        1,
+        1000 / cps
+    );
+
+    timer = setInterval(
+        doClick,
+        interval
+    );
 }
 
 function stop() {
@@ -347,26 +342,19 @@ function stop() {
     running = false;
 
     clearInterval(timer);
+
     timer = null;
 
     status.textContent = "OFF";
     status.classList.remove("on");
 
-    toggle.textContent = "START";
-    toggle.classList.remove("running");
+    startButton.textContent = "START";
+    startButton.classList.remove("running");
 
     actualCpsDisplay.textContent = "0";
 }
 
-function restart() {
-
-    if (!running) return;
-
-    stop();
-    start();
-}
-
-function toggleClicker() {
+function toggle() {
 
     if (running) {
         stop();
@@ -375,48 +363,98 @@ function toggleClicker() {
     }
 }
 
-toggle.addEventListener("click", toggleClicker);
+/* START / STOP button */
 
-cpsSlider.addEventListener("input", function() {
-    setCPS(this.value);
-});
+startButton.addEventListener(
+    "click",
+    toggle
+);
 
-cpsInput.addEventListener("change", function() {
-    setCPS(this.value);
-});
+/* CPS slider */
 
-document.querySelectorAll(".preset").forEach(function(button) {
-
-    button.addEventListener("click", function() {
-        setCPS(this.dataset.cps);
-    });
-
-});
-
-document.addEventListener("keydown", function(event) {
-
-    if (
-        event.key.toLowerCase() === "g" &&
-        document.activeElement !== cpsInput
-    ) {
-        event.preventDefault();
-        toggleClicker();
+slider.addEventListener(
+    "input",
+    function() {
+        setCPS(this.value);
     }
+);
+
+/* CPS number box */
+
+cpsInput.addEventListener(
+    "change",
+    function() {
+        setCPS(this.value);
+    }
+);
+
+/* Presets */
+
+document.querySelectorAll(
+    ".preset"
+).forEach(function(button) {
+
+    button.addEventListener(
+        "click",
+        function() {
+            setCPS(this.dataset.value);
+        }
+    );
 
 });
 
-setInterval(function() {
+/*
+   G KEY
+   Works anywhere while this webpage/app
+   is open and focused.
+*/
 
-    actualCpsDisplay.textContent = clicksThisSecond;
-    clicksThisSecond = 0;
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-}, 1000);
+        if (
+            event.key === "g" ||
+            event.key === "G"
+        ) {
 
-/* Register the service worker */
+            event.preventDefault();
+
+            toggle();
+        }
+
+    }
+);
+
+/* Actual CPS counter */
+
+setInterval(
+    function() {
+
+        actualCpsDisplay.textContent =
+            clicksThisSecond;
+
+        clicksThisSecond = 0;
+
+    },
+    1000
+);
+
+/* PWA service worker */
+
 if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
-        navigator.serviceWorker.register("./sw.js");
-    });
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            navigator.serviceWorker.register(
+                "./sw.js"
+            );
+
+        }
+    );
+
 }
 
 </script>
