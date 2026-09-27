@@ -4,173 +4,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#080b14">
-
 <title>G Clicker</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+    * {
+        box-sizing: border-box;
+    }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #080b14;
-    color: white;
-    font-family: Arial, sans-serif;
-}
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #090d18;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
 
-.app {
-    width: 92%;
-    max-width: 450px;
-    background: #111827;
-    padding: 30px;
-    border-radius: 24px;
-    box-shadow: 0 20px 60px #0008;
-}
+    .app {
+        width: 92%;
+        max-width: 430px;
+        padding: 30px;
+        background: #151b2b;
+        border-radius: 22px;
+        text-align: center;
+        box-shadow: 0 20px 60px #0008;
+    }
 
-h1 {
-    text-align: center;
-    margin: 0;
-    font-size: 32px;
-}
+    h1 {
+        margin: 0;
+        font-size: 34px;
+    }
 
-.subtitle {
-    text-align: center;
-    color: #9ca3af;
-    margin: 8px 0 25px;
-}
+    .subtitle {
+        color: #9ca3af;
+        margin: 8px 0 25px;
+    }
 
-.status {
-    text-align: center;
-    background: #0f172a;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-}
+    .status {
+        padding: 14px;
+        background: #0c1220;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
 
-#status {
-    color: #ef4444;
-    font-weight: bold;
-}
+    #status {
+        color: #ef4444;
+        font-weight: bold;
+    }
 
-#status.on {
-    color: #22c55e;
-}
+    #status.on {
+        color: #22c55e;
+    }
 
-.cps-display {
-    text-align: center;
-}
+    #cps {
+        font-size: 64px;
+        font-weight: bold;
+        color: #818cf8;
+    }
 
-#cpsNumber {
-    font-size: 60px;
-    font-weight: bold;
-    color: #818cf8;
-}
+    .label {
+        color: #9ca3af;
+    }
 
-.cps-label {
-    color: #9ca3af;
-}
+    #slider {
+        width: 100%;
+        margin: 25px 0;
+        accent-color: #6366f1;
+    }
 
-#slider {
-    width: 100%;
-    margin: 25px 0;
-    accent-color: #6366f1;
-}
+    #number {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #374151;
+        border-radius: 10px;
+        background: #0c1220;
+        color: white;
+        text-align: center;
+        font-size: 18px;
+    }
 
-#cpsInput {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #374151;
-    border-radius: 10px;
-    background: #0f172a;
-    color: white;
-    font-size: 18px;
-    text-align: center;
-}
+    #start {
+        width: 100%;
+        margin-top: 20px;
+        padding: 18px;
+        border: 0;
+        border-radius: 12px;
+        background: #4f46e5;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
 
-button {
-    width: 100%;
-    border: 0;
-    border-radius: 12px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-}
+    #start.running {
+        background: #dc2626;
+    }
 
-#startButton {
-    margin-top: 20px;
-    padding: 18px;
-    background: #4f46e5;
-    font-size: 20px;
-}
+    #test {
+        width: 100%;
+        margin-top: 10px;
+        padding: 13px;
+        border: 0;
+        border-radius: 12px;
+        background: #374151;
+        color: white;
+        cursor: pointer;
+    }
 
-#startButton.running {
-    background: #dc2626;
-}
+    .counter {
+        margin-top: 20px;
+        padding: 15px;
+        background: #0c1220;
+        border-radius: 12px;
+    }
 
-#testButton {
-    margin-top: 10px;
-    padding: 13px;
-    background: #374151;
-}
+    .hint {
+        margin-top: 20px;
+        color: #9ca3af;
+        font-size: 14px;
+    }
 
-.presets {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-top: 12px;
-}
+    kbd {
+        padding: 5px 10px;
+        background: #374151;
+        border-radius: 6px;
+        color: white;
+        font-weight: bold;
+    }
 
-.preset {
-    padding: 10px;
-    background: #374151;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.stat {
-    background: #0f172a;
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.stat-label {
-    color: #9ca3af;
-    font-size: 12px;
-    margin-top: 4px;
-}
-
-.help {
-    text-align: center;
-    margin-top: 20px;
-    color: #9ca3af;
-}
-
-kbd {
-    background: #374151;
-    padding: 5px 10px;
-    border-radius: 6px;
-    color: white;
-    font-weight: bold;
-}
+    #keyMessage {
+        height: 20px;
+        margin-top: 10px;
+        color: #818cf8;
+        font-size: 13px;
+    }
 </style>
 </head>
 
@@ -189,14 +158,10 @@ kbd {
         <span id="status">OFF</span>
     </div>
 
-    <div class="cps-display">
+    <div id="cps">10</div>
 
-        <div id="cpsNumber">10</div>
-
-        <div class="cps-label">
-            CLICKS PER SECOND
-        </div>
-
+    <div class="label">
+        CLICKS PER SECOND
     </div>
 
     <input
@@ -208,45 +173,30 @@ kbd {
     >
 
     <input
-        id="cpsInput"
+        id="number"
         type="number"
         min="1"
         max="1000"
         value="10"
     >
 
-    <div class="presets">
-        <button class="preset" data-value="1">1</button>
-        <button class="preset" data-value="10">10</button>
-        <button class="preset" data-value="50">50</button>
-        <button class="preset" data-value="100">100</button>
-    </div>
-
-    <button id="startButton">
+    <button id="start">
         START
     </button>
 
-    <button id="testButton">
+    <button id="test">
         TEST CLICK
     </button>
 
-    <div class="stats">
-
-        <div class="stat">
-            <div id="totalClicks" class="stat-number">0</div>
-            <div class="stat-label">TOTAL CLICKS</div>
-        </div>
-
-        <div class="stat">
-            <div id="actualCps" class="stat-number">0</div>
-            <div class="stat-label">ACTUAL CPS</div>
-        </div>
-
+    <div class="counter">
+        Clicks: <b id="count">0</b>
     </div>
 
-    <div class="help">
-        Press <kbd>G</kbd> to START / STOP
+    <div class="hint">
+        Press <kbd>G</kbd> to start / stop
     </div>
+
+    <div id="keyMessage"></div>
 
 </div>
 
@@ -254,43 +204,49 @@ kbd {
 
 let running = false;
 let timer = null;
+let count = 0;
 
-let totalClicks = 0;
-let clicksThisSecond = 0;
-
-const status = document.getElementById("status");
-const startButton = document.getElementById("startButton");
+const statusText = document.getElementById("status");
+const startButton = document.getElementById("start");
+const testButton = document.getElementById("test");
 
 const slider = document.getElementById("slider");
-const cpsInput = document.getElementById("cpsInput");
-const cpsNumber = document.getElementById("cpsNumber");
+const number = document.getElementById("number");
 
-const totalClicksDisplay = document.getElementById("totalClicks");
-const actualCpsDisplay = document.getElementById("actualCps");
+const cpsDisplay = document.getElementById("cps");
+const countDisplay = document.getElementById("count");
+const keyMessage = document.getElementById("keyMessage");
+
+
+/* Get CPS */
 
 function getCPS() {
 
-    let cps = parseInt(cpsInput.value);
+    let value = Number(number.value);
 
-    if (isNaN(cps)) {
-        cps = 10;
+    if (!Number.isFinite(value)) {
+        value = 10;
     }
 
-    cps = Math.max(1, Math.min(1000, cps));
-
-    return cps;
+    return Math.max(
+        1,
+        Math.min(1000, Math.round(value))
+    );
 }
+
+
+/* Change CPS */
 
 function setCPS(value) {
 
     value = Math.max(
         1,
-        Math.min(1000, parseInt(value) || 1)
+        Math.min(1000, Math.round(Number(value)))
     );
 
     slider.value = value;
-    cpsInput.value = value;
-    cpsNumber.textContent = value;
+    number.value = value;
+    cpsDisplay.textContent = value;
 
     if (running) {
         stop();
@@ -298,19 +254,29 @@ function setCPS(value) {
     }
 }
 
-function doClick() {
 
-    totalClicks++;
-    clicksThisSecond++;
+/* The click */
 
-    totalClicksDisplay.textContent =
-        totalClicks.toLocaleString();
+function clickOnce() {
+
+    count++;
+
+    countDisplay.textContent =
+        count.toLocaleString();
 
     /*
-      This creates the click inside the app.
+      This is a click generated inside
+      the webpage.
     */
-    document.getElementById("testButton").click();
+    testButton.dispatchEvent(
+        new MouseEvent("click", {
+            bubbles: true
+        })
+    );
 }
+
+
+/* Start */
 
 function start() {
 
@@ -318,24 +284,27 @@ function start() {
 
     running = true;
 
-    status.textContent = "ON";
-    status.classList.add("on");
+    statusText.textContent = "ON";
+    statusText.classList.add("on");
 
     startButton.textContent = "STOP";
     startButton.classList.add("running");
 
     const cps = getCPS();
 
-    const interval = Math.max(
+    const delay = Math.max(
         1,
         1000 / cps
     );
 
     timer = setInterval(
-        doClick,
-        interval
+        clickOnce,
+        delay
     );
 }
+
+
+/* Stop */
 
 function stop() {
 
@@ -345,14 +314,15 @@ function stop() {
 
     timer = null;
 
-    status.textContent = "OFF";
-    status.classList.remove("on");
+    statusText.textContent = "OFF";
+    statusText.classList.remove("on");
 
     startButton.textContent = "START";
     startButton.classList.remove("running");
-
-    actualCpsDisplay.textContent = "0";
 }
+
+
+/* Toggle */
 
 function toggle() {
 
@@ -363,14 +333,16 @@ function toggle() {
     }
 }
 
-/* START / STOP button */
+
+/* Button */
 
 startButton.addEventListener(
     "click",
     toggle
 );
 
-/* CPS slider */
+
+/* Slider */
 
 slider.addEventListener(
     "input",
@@ -379,34 +351,23 @@ slider.addEventListener(
     }
 );
 
-/* CPS number box */
 
-cpsInput.addEventListener(
+/* Number */
+
+number.addEventListener(
     "change",
     function() {
         setCPS(this.value);
     }
 );
 
-/* Presets */
-
-document.querySelectorAll(
-    ".preset"
-).forEach(function(button) {
-
-    button.addEventListener(
-        "click",
-        function() {
-            setCPS(this.dataset.value);
-        }
-    );
-
-});
 
 /*
    G KEY
-   Works anywhere while this webpage/app
-   is open and focused.
+
+   keydown is attached to the entire
+   webpage, so it doesn't matter where
+   you clicked on the page.
 */
 
 document.addEventListener(
@@ -420,42 +381,21 @@ document.addEventListener(
 
             event.preventDefault();
 
+            keyMessage.textContent =
+                "G detected!";
+
             toggle();
+
+            setTimeout(
+                function() {
+                    keyMessage.textContent = "";
+                },
+                700
+            );
         }
 
     }
 );
-
-/* Actual CPS counter */
-
-setInterval(
-    function() {
-
-        actualCpsDisplay.textContent =
-            clicksThisSecond;
-
-        clicksThisSecond = 0;
-
-    },
-    1000
-);
-
-/* PWA service worker */
-
-if ("serviceWorker" in navigator) {
-
-    window.addEventListener(
-        "load",
-        function() {
-
-            navigator.serviceWorker.register(
-                "./sw.js"
-            );
-
-        }
-    );
-
-}
 
 </script>
 
