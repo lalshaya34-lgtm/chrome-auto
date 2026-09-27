@@ -4,143 +4,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>G Auto Clicker</title>
-
-<link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#111827">
+<title>My Auto Clicker</title>
 
 <style>
-body {
-    margin: 0;
-    background: #111827;
-    color: white;
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
+    * {
+        box-sizing: border-box;
+    }
 
-.container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-}
+    body {
+        margin: 0;
+        background: #111827;
+        color: #f8fafc;
+        font-family: Arial, sans-serif;
+    }
 
-.card {
-    background: #1f2937;
-    border-radius: 16px;
-    padding: 25px;
-}
+    .app {
+        width: min(650px, 94%);
+        margin: 30px auto;
+    }
 
-input {
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: 1px solid #475569;
-    background: #111827;
-    color: white;
-    font-size: 18px;
-}
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-button {
-    padding: 13px 20px;
-    margin: 8px 4px;
-    border: 0;
-    border-radius: 9px;
-    background: #4f46e5;
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-}
+    .panel {
+        background: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 16px;
+    }
 
-#status {
-    color: #ef4444;
-    font-weight: bold;
-}
+    .row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 12px 0;
+    }
 
-#status.on {
-    color: #22c55e;
-}
+    label {
+        min-width: 160px;
+        font-weight: bold;
+    }
 
-#mouseArea {
-    height: 250px;
-    margin-top: 20px;
-    border: 2px solid #6366f1;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    input,
+    select {
+        flex: 1;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #4b5563;
+        background: #111827;
+        color: white;
+        font-size: 16px;
+    }
 
-#mouseArea.locked {
-    background: #172554;
-}
+    input[type="number"] {
+        max-width: 180px;
+    }
+
+    button {
+        padding: 11px 20px;
+        border: 0;
+        border-radius: 8px;
+        background: #4f46e5;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #6366f1;
+    }
+
+    .stop {
+        background: #dc2626;
+    }
+
+    .stop:hover {
+        background: #ef4444;
+    }
+
+    .reset {
+        background: #475569;
+    }
+
+    .status {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: #ef4444;
+    }
+
+    .status.on {
+        color: #22c55e;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 15px;
+    }
+
+    .stat {
+        background: #111827;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .number {
+        display: block;
+        font-size: 26px;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    #testArea {
+        position: relative;
+        height: 300px;
+        background: #0f172a;
+        border: 2px solid #4f46e5;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    #target {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: #22c55e;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .help {
+        color: #94a3b8;
+        line-height: 1.5;
+    }
+
+    .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 15px;
+    }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-<div class="card">
+    <h1>🖱️ My Auto Clicker</h1>
 
-<h1>🖱️ G Auto Clicker</h1>
+    <div class="panel">
 
-<p>
-Status:
-<span id="status">OFF</span>
-</p>
+        <div id="status" class="status">
+            ● OFF
+        </div>
 
-<label>
-CPS (1–1000)
-</label>
+        <div class="row">
+            <label for="cps">Clicks Per Second</label>
 
-<br><br>
+            <input
+                id="cps"
+                type="number"
+                min="1"
+                max="1000"
+                value="10"
+            >
+        </div>
 
-<input
-    id="cps"
-    type="number"
-    min="1"
-    max="1000"
-    value="10"
->
+        <div class="row">
+            <label for="buttonType">Mouse Button</label>
 
-<br>
+            <select id="buttonType">
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+                <option value="middle">Middle</option>
+            </select>
+        </div>
 
-<button id="start">
-START
-</button>
+        <div class="row">
+            <label for="clickType">Click Type</label>
 
-<button id="stop">
-STOP
-</button>
+            <select id="clickType">
+                <option value="single">Single Click</option>
+                <option value="double">Double Click</option>
+            </select>
+        </div>
 
-<button id="mouse">
-USE MOUSE
-</button>
+        <div class="buttons">
 
-<p>
-Clicks:
-<strong id="count">0</strong>
-</p>
+            <button id="start">
+                START
+            </button>
 
-<div id="mouseArea">
-    Click <b>USE MOUSE</b> to test mouse access.
+            <button id="stop" class="stop">
+                STOP
+            </button>
+
+            <button id="reset" class="reset">
+                RESET
+            </button>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                Clicks
+                <span
+                    id="clickCount"
+                    class="number"
+                >0</span>
+            </div>
+
+            <div class="stat">
+                CPS
+                <span
+                    id="currentCps"
+                    class="number"
+                >10</span>
+            </div>
+
+        </div>
+
+        <p class="help">
+            Press <strong>G</strong> to start or stop.
+            Don't press G while typing in the CPS box.
+        </p>
+
+    </div>
+
+    <div class="panel">
+
+        <h2>Test Area</h2>
+
+        <p class="help">
+            This is the area the browser version can click.
+        </p>
+
+        <div id="testArea">
+
+            <button
+                id="target"
+                aria-label="Click target"
+            ></button>
+
+        </div>
+
+    </div>
+
 </div>
 
-<p>
-Press <b>G</b> to start/stop.
-</p>
-
-</div>
-
-</div>
 
 <script>
 
 const cpsInput =
     document.getElementById("cps");
+
+const buttonType =
+    document.getElementById("buttonType");
+
+const clickType =
+    document.getElementById("clickType");
 
 const startButton =
     document.getElementById("start");
@@ -148,24 +281,31 @@ const startButton =
 const stopButton =
     document.getElementById("stop");
 
-const mouseButton =
-    document.getElementById("mouse");
+const resetButton =
+    document.getElementById("reset");
 
 const status =
     document.getElementById("status");
 
-const countDisplay =
-    document.getElementById("count");
+const clickCount =
+    document.getElementById("clickCount");
 
-const mouseArea =
-    document.getElementById("mouseArea");
+const currentCps =
+    document.getElementById("currentCps");
+
+const testArea =
+    document.getElementById("testArea");
+
+const target =
+    document.getElementById("target");
+
 
 let running = false;
 let timer = null;
 let clicks = 0;
 
 
-/* Get CPS */
+/* Get CPS between 1 and 1000 */
 
 function getCPS() {
 
@@ -180,13 +320,127 @@ function getCPS() {
         Math.round(
             Math.max(
                 1,
-                Math.min(1000, value)
+                Math.min(
+                    1000,
+                    value
+                )
             )
         );
 
     cpsInput.value = value;
 
+    currentCps.textContent = value;
+
     return value;
+}
+
+
+/* Move target */
+
+function moveTarget() {
+
+    const padding = 10;
+
+    const maxX =
+        testArea.clientWidth -
+        target.offsetWidth -
+        padding;
+
+    const maxY =
+        testArea.clientHeight -
+        target.offsetHeight -
+        padding;
+
+    target.style.left =
+        (
+            padding +
+            Math.random() *
+            Math.max(0, maxX - padding)
+        ) + "px";
+
+    target.style.top =
+        (
+            padding +
+            Math.random() *
+            Math.max(0, maxY - padding)
+        ) + "px";
+}
+
+
+/* Actual test click */
+
+target.addEventListener(
+    "click",
+    function(event) {
+
+        clicks++;
+
+        clickCount.textContent =
+            clicks.toLocaleString();
+
+        moveTarget();
+
+    }
+);
+
+
+/* Generate a browser click */
+
+function doClick() {
+
+    const button =
+        buttonType.value;
+
+    let mouseButton = 0;
+
+    if (button === "right") {
+        mouseButton = 2;
+    }
+
+    if (button === "middle") {
+        mouseButton = 1;
+    }
+
+    const eventOptions = {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        button: mouseButton,
+        buttons: 0,
+        clientX:
+            target.getBoundingClientRect().left +
+            target.offsetWidth / 2,
+        clientY:
+            target.getBoundingClientRect().top +
+            target.offsetHeight / 2
+    };
+
+
+    if (clickType.value === "double") {
+
+        target.dispatchEvent(
+            new MouseEvent(
+                "dblclick",
+                eventOptions
+            )
+        );
+
+        clicks += 2;
+
+    } else {
+
+        target.dispatchEvent(
+            new MouseEvent(
+                "click",
+                eventOptions
+            )
+        );
+
+    }
+
+    clickCount.textContent =
+        clicks.toLocaleString();
+
 }
 
 
@@ -194,23 +448,27 @@ function getCPS() {
 
 function start() {
 
-    if (running) return;
-
-    running = true;
-
-    status.textContent = "ON";
-    status.classList.add("on");
+    if (running) {
+        return;
+    }
 
     const cps = getCPS();
 
-    timer = setInterval(function() {
+    running = true;
 
-        clicks++;
+    status.textContent =
+        "● ON";
 
-        countDisplay.textContent =
-            clicks.toLocaleString();
+    status.classList.add("on");
 
-    }, Math.max(1, 1000 / cps));
+    timer =
+        setInterval(
+            doClick,
+            Math.max(
+                1,
+                1000 / cps
+            )
+        );
 }
 
 
@@ -220,12 +478,32 @@ function stop() {
 
     running = false;
 
-    clearInterval(timer);
+    if (timer !== null) {
 
-    timer = null;
+        clearInterval(timer);
 
-    status.textContent = "OFF";
+        timer = null;
+    }
+
+    status.textContent =
+        "● OFF";
+
     status.classList.remove("on");
+}
+
+
+/* Reset */
+
+function reset() {
+
+    stop();
+
+    clicks = 0;
+
+    clickCount.textContent =
+        "0";
+
+    moveTarget();
 }
 
 
@@ -235,8 +513,18 @@ startButton.onclick = start;
 
 stopButton.onclick = stop;
 
+resetButton.onclick = reset;
 
-/* G shortcut */
+
+/* Update CPS display */
+
+cpsInput.addEventListener(
+    "input",
+    getCPS
+);
+
+
+/* G keyboard shortcut */
 
 document.addEventListener(
     "keydown",
@@ -248,7 +536,8 @@ document.addEventListener(
         ) {
 
             if (
-                event.target.tagName === "INPUT"
+                event.target.tagName === "INPUT" ||
+                event.target.tagName === "TEXTAREA"
             ) {
                 return;
             }
@@ -260,78 +549,16 @@ document.addEventListener(
             } else {
                 start();
             }
-        }
-    }
-);
 
-
-/*
-    Test Pointer Lock.
-
-    This is the most mouse access
-    a normal web app can request.
-*/
-
-mouseButton.onclick = async function() {
-
-    try {
-
-        await mouseArea.requestPointerLock();
-
-        mouseArea.classList.add("locked");
-
-        mouseArea.textContent =
-            "Mouse captured. Press ESC to release it.";
-
-    } catch (error) {
-
-        mouseArea.textContent =
-            "Chrome did not allow mouse access.";
-
-        console.log(error);
-
-    }
-
-};
-
-
-/* Mouse movement test */
-
-document.addEventListener(
-    "mousemove",
-    function(event) {
-
-        if (
-            document.pointerLockElement === mouseArea
-        ) {
-
-            mouseArea.textContent =
-                "Mouse movement detected: " +
-                event.movementX +
-                ", " +
-                event.movementY;
         }
 
     }
 );
 
 
-/* Service worker */
+/* Initial target position */
 
-if ("serviceWorker" in navigator) {
-
-    navigator.serviceWorker.register(
-        "sw.js"
-    ).catch(function(error) {
-
-        console.log(
-            "Service worker:",
-            error
-        );
-
-    });
-
-}
+moveTarget();
 
 </script>
 
