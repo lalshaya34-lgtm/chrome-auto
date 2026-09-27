@@ -4,142 +4,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>G Auto Clicker</title>
 
-<style>
-* {
-    box-sizing: border-box;
-}
+<link rel="manifest" href="manifest.json">
 
+<meta name="theme-color" content="#111827">
+
+<style>
 body {
     margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background: #101827;
+    background: #111827;
     color: white;
-    display: flex;
-    justify-content: center;
-}
-
-.container {
-    width: min(700px, 94%);
-    margin-top: 35px;
-}
-
-h1 {
+    font-family: Arial, sans-serif;
     text-align: center;
 }
 
-.card {
-    background: #182235;
-    border: 1px solid #334155;
-    border-radius: 16px;
+.container {
+    max-width: 600px;
+    margin: 40px auto;
     padding: 20px;
-    margin-bottom: 20px;
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
+.card {
+    background: #1f2937;
+    border-radius: 16px;
+    padding: 25px;
 }
 
 input {
     width: 100%;
     padding: 12px;
+    box-sizing: border-box;
     border-radius: 8px;
     border: 1px solid #475569;
-    background: #0f172a;
+    background: #111827;
     color: white;
     font-size: 18px;
 }
 
 button {
     padding: 13px 20px;
+    margin: 8px 4px;
     border: 0;
     border-radius: 9px;
     background: #4f46e5;
     color: white;
     font-size: 17px;
     font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #6366f1;
-}
-
-#stop {
-    background: #dc2626;
-}
-
-#stop:hover {
-    background: #ef4444;
-}
-
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.stat {
-    background: #0f172a;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.stat-number {
-    display: block;
-    font-size: 25px;
-    font-weight: bold;
-    margin-top: 5px;
 }
 
 #status {
     color: #ef4444;
+    font-weight: bold;
 }
 
 #status.on {
     color: #22c55e;
 }
 
-#testArea {
-    position: relative;
-    height: 350px;
-    border: 3px solid #4f46e5;
-    border-radius: 15px;
-    background: #0f172a;
-    overflow: hidden;
+#mouseArea {
+    height: 250px;
+    margin-top: 20px;
+    border: 2px solid #6366f1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#target {
-    position: absolute;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background: #22c55e;
-    border: 0;
-    cursor: pointer;
-    padding: 0;
-}
-
-#target:hover {
-    background: #16a34a;
-}
-
-.help {
-    color: #94a3b8;
-    line-height: 1.5;
+#mouseArea.locked {
+    background: #172554;
 }
 </style>
 </head>
@@ -148,225 +83,160 @@ button:hover {
 
 <div class="container">
 
-    <h1>🖱️ G Auto Clicker</h1>
+<div class="card">
 
-    <div class="card">
+<h1>🖱️ G Auto Clicker</h1>
 
-        <label for="cps">Clicks Per Second (1–1000)</label>
+<p>
+Status:
+<span id="status">OFF</span>
+</p>
 
-        <input
-            id="cps"
-            type="number"
-            min="1"
-            max="1000"
-            value="10"
-        >
+<label>
+CPS (1–1000)
+</label>
 
-        <div class="controls">
+<br><br>
 
-            <button id="start">
-                START
-            </button>
+<input
+    id="cps"
+    type="number"
+    min="1"
+    max="1000"
+    value="10"
+>
 
-            <button id="stop">
-                STOP
-            </button>
+<br>
 
-        </div>
+<button id="start">
+START
+</button>
 
-        <div class="info">
+<button id="stop">
+STOP
+</button>
 
-            <div class="stat">
-                Status
-                <span
-                    id="status"
-                    class="stat-number"
-                >
-                    OFF
-                </span>
-            </div>
+<button id="mouse">
+USE MOUSE
+</button>
 
-            <div class="stat">
-                Clicks
-                <span
-                    id="clickCount"
-                    class="stat-number"
-                >
-                    0
-                </span>
-            </div>
+<p>
+Clicks:
+<strong id="count">0</strong>
+</p>
 
-        </div>
+<div id="mouseArea">
+    Click <b>USE MOUSE</b> to test mouse access.
+</div>
 
-        <p class="help">
-            Press <strong>G</strong> to start or stop the
-            auto-clicker. The page must be focused.
-        </p>
+<p>
+Press <b>G</b> to start/stop.
+</p>
 
-    </div>
-
-    <div class="card">
-
-        <h2>Test Area</h2>
-
-        <p class="help">
-            The green button is the target for this webpage.
-        </p>
-
-        <div id="testArea">
-
-            <button
-                id="target"
-                aria-label="Click target"
-            >
-            </button>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 <script>
 
-const cpsInput = document.getElementById("cps");
-const startButton = document.getElementById("start");
-const stopButton = document.getElementById("stop");
-const statusText = document.getElementById("status");
-const clickCount = document.getElementById("clickCount");
-const target = document.getElementById("target");
-const testArea = document.getElementById("testArea");
+const cpsInput =
+    document.getElementById("cps");
+
+const startButton =
+    document.getElementById("start");
+
+const stopButton =
+    document.getElementById("stop");
+
+const mouseButton =
+    document.getElementById("mouse");
+
+const status =
+    document.getElementById("status");
+
+const countDisplay =
+    document.getElementById("count");
+
+const mouseArea =
+    document.getElementById("mouseArea");
 
 let running = false;
 let timer = null;
 let clicks = 0;
 
 
-/* Get a valid CPS value */
+/* Get CPS */
 
 function getCPS() {
 
-    let cps = Number(cpsInput.value);
+    let value =
+        Number(cpsInput.value);
 
-    if (!Number.isFinite(cps)) {
-        cps = 10;
+    if (!Number.isFinite(value)) {
+        value = 10;
     }
 
-    cps = Math.round(cps);
+    value =
+        Math.round(
+            Math.max(
+                1,
+                Math.min(1000, value)
+            )
+        );
 
-    cps = Math.max(1, Math.min(1000, cps));
+    cpsInput.value = value;
 
-    cpsInput.value = cps;
-
-    return cps;
+    return value;
 }
-
-
-/* Move the test target */
-
-function moveTarget() {
-
-    const padding = 10;
-
-    const maxX =
-        testArea.clientWidth -
-        target.offsetWidth -
-        padding;
-
-    const maxY =
-        testArea.clientHeight -
-        target.offsetHeight -
-        padding;
-
-    const x =
-        padding +
-        Math.random() *
-        Math.max(0, maxX - padding);
-
-    const y =
-        padding +
-        Math.random() *
-        Math.max(0, maxY - padding);
-
-    target.style.left = x + "px";
-    target.style.top = y + "px";
-}
-
-
-/* What happens when the target is clicked */
-
-target.addEventListener("click", function() {
-
-    clicks++;
-
-    clickCount.textContent =
-        clicks.toLocaleString();
-
-    moveTarget();
-
-});
 
 
 /* Start */
 
-function startClicker() {
+function start() {
 
-    if (running) {
-        return;
-    }
-
-    const cps = getCPS();
+    if (running) return;
 
     running = true;
 
-    statusText.textContent = "ON";
-    statusText.classList.add("on");
+    status.textContent = "ON";
+    status.classList.add("on");
+
+    const cps = getCPS();
 
     timer = setInterval(function() {
 
-        target.dispatchEvent(
-            new MouseEvent("click", {
-                bubbles: true,
-                cancelable: true,
-                view: window
-            })
-        );
+        clicks++;
+
+        countDisplay.textContent =
+            clicks.toLocaleString();
 
     }, Math.max(1, 1000 / cps));
-
 }
 
 
 /* Stop */
 
-function stopClicker() {
+function stop() {
 
     running = false;
 
-    if (timer !== null) {
-        clearInterval(timer);
-        timer = null;
-    }
+    clearInterval(timer);
 
-    statusText.textContent = "OFF";
-    statusText.classList.remove("on");
+    timer = null;
+
+    status.textContent = "OFF";
+    status.classList.remove("on");
 }
 
 
 /* Buttons */
 
-startButton.addEventListener(
-    "click",
-    startClicker
-);
+startButton.onclick = start;
 
-stopButton.addEventListener(
-    "click",
-    stopClicker
-);
+stopButton.onclick = stop;
 
 
-/* G keyboard shortcut */
+/* G shortcut */
 
 document.addEventListener(
     "keydown",
@@ -377,14 +247,8 @@ document.addEventListener(
             event.key === "G"
         ) {
 
-            /*
-             Don't trigger G while
-             typing in the CPS box.
-            */
-
             if (
-                event.target.tagName === "INPUT" ||
-                event.target.tagName === "TEXTAREA"
+                event.target.tagName === "INPUT"
             ) {
                 return;
             }
@@ -392,20 +256,82 @@ document.addEventListener(
             event.preventDefault();
 
             if (running) {
-                stopClicker();
+                stop();
             } else {
-                startClicker();
+                start();
             }
+        }
+    }
+);
 
+
+/*
+    Test Pointer Lock.
+
+    This is the most mouse access
+    a normal web app can request.
+*/
+
+mouseButton.onclick = async function() {
+
+    try {
+
+        await mouseArea.requestPointerLock();
+
+        mouseArea.classList.add("locked");
+
+        mouseArea.textContent =
+            "Mouse captured. Press ESC to release it.";
+
+    } catch (error) {
+
+        mouseArea.textContent =
+            "Chrome did not allow mouse access.";
+
+        console.log(error);
+
+    }
+
+};
+
+
+/* Mouse movement test */
+
+document.addEventListener(
+    "mousemove",
+    function(event) {
+
+        if (
+            document.pointerLockElement === mouseArea
+        ) {
+
+            mouseArea.textContent =
+                "Mouse movement detected: " +
+                event.movementX +
+                ", " +
+                event.movementY;
         }
 
     }
 );
 
 
-/* Start with target in a random position */
+/* Service worker */
 
-moveTarget();
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker.register(
+        "sw.js"
+    ).catch(function(error) {
+
+        console.log(
+            "Service worker:",
+            error
+        );
+
+    });
+
+}
 
 </script>
 
