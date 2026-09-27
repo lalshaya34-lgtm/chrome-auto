@@ -1,0 +1,12 @@
+```json
+{
+  "name": "G Auto Clicker",
+  "short_name": "G Clicker",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "description": "A browser-based auto clicker test app.",
+  "icons": []
+}
+```
