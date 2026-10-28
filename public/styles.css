@@ -55,9 +55,9 @@
       <section class="card detail">
         <h2>How it works</h2>
         <ul>
-          <li>This app launches real Chrome and controls it locally from the Chromebook.</li>
-          <li>It can click webpage elements or a fixed screen position repeatedly.</li>
-          <li>This is the working method for page clicking without fake extension tricks.</li>
+          <li>This app launches a real Chrome browser on the Chromebook.</li>
+          <li>It then clicks the page it opened or a fixed screen position repeatedly.</li>
+          <li>This is the real working browser automation approach without fake extension tricks.</li>
         </ul>
       </section>
     </main>

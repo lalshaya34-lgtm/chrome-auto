@@ -87,6 +87,7 @@ app.post('/api/start', async (req, res) => {
         if (mode === 'selector') {
           const locator = page.locator(selector).first();
           const count = await locator.count();
+
           if (count > 0) {
             await locator.click({ timeout: 3000 }).catch(() => {});
           }
@@ -95,7 +96,7 @@ app.post('/api/start', async (req, res) => {
 
         await page.mouse.click(Number(x), Number(y));
       } catch (error) {
-        console.error('Click loop error:', error);
+        console.error('Auto-click loop error:', error);
       }
     }, Number(interval));
 

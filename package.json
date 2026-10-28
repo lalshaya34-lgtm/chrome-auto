@@ -1,7 +1,7 @@
 {
   "name": "chrome-auto-clicker-app",
   "version": "1.0.0",
-  "description": "Local Chromebook app that opens real Chrome and auto-clicks webpage elements using Playwright.",
+  "description": "Real local Chromebook app that launches Chrome and auto-clicks pages it opens.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -11,7 +11,7 @@
     "auto-clicker",
     "chromebook",
     "playwright",
-    "browser-automation"
+    "chrome-automation"
   ],
   "license": "MIT",
   "dependencies": {
