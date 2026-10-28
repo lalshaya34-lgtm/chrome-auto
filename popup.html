@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chrome Auto Clicker</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="app">
+      <h1>Auto Clicker</h1>
+
+      <label for="interval">Click every:</label>
+      <div class="row">
+        <input id="interval" type="number" min="100" step="50" value="1000" />
+        <span>ms</span>
+      </div>
+
+      <label for="mode">Click mode</label>
+      <select id="mode">
+        <option value="cursor">Current cursor position</option>
+        <option value="selector">CSS selector</option>
+      </select>
+
+      <label for="selector">Selector (optional)</label>
+      <input id="selector" type="text" placeholder="button.primary, .start-btn" />
+
+      <div class="controls">
+        <button id="start" class="primary">Start</button>
+        <button id="stop">Stop</button>
+      </div>
+
+      <p id="status">Stopped</p>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
