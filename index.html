@@ -1,567 +1,225 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Auto Clicker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chromebook Auto Clicker</title>
 
-<style>
+  <style>
     * {
-        box-sizing: border-box;
+      box-sizing: border-box;
     }
 
     body {
-        margin: 0;
-        background: #111827;
-        color: #f8fafc;
-        font-family: Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: #101827;
+      color: white;
     }
 
     .app {
-        width: min(650px, 94%);
-        margin: 30px auto;
+      width: 90%;
+      max-width: 420px;
+      padding: 28px;
+      border-radius: 20px;
+      background: #1e293b;
+      box-shadow: 0 10px 40px #0006;
+      text-align: center;
     }
 
     h1 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .panel {
-        background: #1f2937;
-        border: 1px solid #374151;
-        border-radius: 14px;
-        padding: 20px;
-        margin-bottom: 16px;
-    }
-
-    .row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 12px 0;
-    }
-
-    label {
-        min-width: 160px;
-        font-weight: bold;
-    }
-
-    input,
-    select {
-        flex: 1;
-        padding: 10px;
-        border-radius: 8px;
-        border: 1px solid #4b5563;
-        background: #111827;
-        color: white;
-        font-size: 16px;
-    }
-
-    input[type="number"] {
-        max-width: 180px;
-    }
-
-    button {
-        padding: 11px 20px;
-        border: 0;
-        border-radius: 8px;
-        background: #4f46e5;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #6366f1;
-    }
-
-    .stop {
-        background: #dc2626;
-    }
-
-    .stop:hover {
-        background: #ef4444;
-    }
-
-    .reset {
-        background: #475569;
+      margin-top: 0;
+      color: #60a5fa;
     }
 
     .status {
-        text-align: center;
-        font-size: 20px;
-        font-weight: bold;
-        color: #ef4444;
+      margin: 20px 0;
+      padding: 12px;
+      border-radius: 10px;
+      background: #334155;
+      font-weight: bold;
     }
 
-    .status.on {
-        color: #22c55e;
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      text-align: left;
     }
 
-    .stats {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-top: 15px;
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
     }
 
-    .stat {
-        background: #111827;
-        border-radius: 10px;
-        padding: 15px;
-        text-align: center;
+    input[type="range"] {
+      padding: 0;
+      accent-color: #60a5fa;
     }
 
-    .number {
-        display: block;
-        font-size: 26px;
-        font-weight: bold;
-        margin-top: 5px;
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
     }
 
-    #testArea {
-        position: relative;
-        height: 300px;
-        background: #0f172a;
-        border: 2px solid #4f46e5;
-        border-radius: 12px;
-        overflow: hidden;
+    button:hover {
+      filter: brightness(1.12);
     }
 
-    #target {
-        position: absolute;
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background: #22c55e;
-        border: none;
-        cursor: pointer;
-        padding: 0;
+    #start {
+      background: #22c55e;
+      color: #052e16;
     }
 
-    .help {
-        color: #94a3b8;
-        line-height: 1.5;
+    #stop {
+      background: #ef4444;
+      color: white;
     }
 
-    .buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 15px;
+    #test {
+      background: #3b82f6;
+      color: white;
     }
-</style>
+
+    .counter {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 18px 0;
+    }
+
+    .note {
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
+  <main class="app">
+    <h1>⚡ Auto Clicker</h1>
+    <p>Chromebook & Chrome</p>
 
-<div class="app">
-
-    <h1>🖱️ My Auto Clicker</h1>
-
-    <div class="panel">
-
-        <div id="status" class="status">
-            ● OFF
-        </div>
-
-        <div class="row">
-            <label for="cps">Clicks Per Second</label>
-
-            <input
-                id="cps"
-                type="number"
-                min="1"
-                max="1000"
-                value="10"
-            >
-        </div>
-
-        <div class="row">
-            <label for="buttonType">Mouse Button</label>
-
-            <select id="buttonType">
-                <option value="left">Left</option>
-                <option value="right">Right</option>
-                <option value="middle">Middle</option>
-            </select>
-        </div>
-
-        <div class="row">
-            <label for="clickType">Click Type</label>
-
-            <select id="clickType">
-                <option value="single">Single Click</option>
-                <option value="double">Double Click</option>
-            </select>
-        </div>
-
-        <div class="buttons">
-
-            <button id="start">
-                START
-            </button>
-
-            <button id="stop" class="stop">
-                STOP
-            </button>
-
-            <button id="reset" class="reset">
-                RESET
-            </button>
-
-        </div>
-
-        <div class="stats">
-
-            <div class="stat">
-                Clicks
-                <span
-                    id="clickCount"
-                    class="number"
-                >0</span>
-            </div>
-
-            <div class="stat">
-                CPS
-                <span
-                    id="currentCps"
-                    class="number"
-                >10</span>
-            </div>
-
-        </div>
-
-        <p class="help">
-            Press <strong>G</strong> to start or stop.
-            Don't press G while typing in the CPS box.
-        </p>
-
+    <div class="status" id="status">
+      Status: Stopped
     </div>
 
-    <div class="panel">
+    <label for="speed">
+      Click interval: <span id="speedText">100 ms</span>
+    </label>
+    <input
+      id="speed"
+      type="range"
+      min="10"
+      max="2000"
+      step="10"
+      value="100"
+    >
 
-        <h2>Test Area</h2>
+    <label for="mode">Click button</label>
+    <select id="mode">
+      <option value="left">Left click</option>
+      <option value="right">Right click (test area only)</option>
+    </select>
 
-        <p class="help">
-            This is the area the browser version can click.
-        </p>
+    <button id="start">▶ Start Auto Clicker</button>
+    <button id="stop">■ Stop Auto Clicker</button>
 
-        <div id="testArea">
+    <div class="counter" id="counter">0</div>
+    <div>Clicks performed</div>
 
-            <button
-                id="target"
-                aria-label="Click target"
-            ></button>
+    <h3>Test Area</h3>
+    <button id="test">Click Me to Test</button>
 
-        </div>
+    <p class="note">
+      This webpage can only generate clicks inside its own test area.
+      Chrome webpages cannot automatically click other tabs, other
+      websites, or Chromebook system controls.
+    </p>
+  </main>
 
-    </div>
+  <script>
+    const speed = document.getElementById("speed");
+    const speedText = document.getElementById("speedText");
+    const status = document.getElementById("status");
+    const counter = document.getElementById("counter");
+    const start = document.getElementById("start");
+    const stop = document.getElementById("stop");
+    const test = document.getElementById("test");
+    const mode = document.getElementById("mode");
 
-</div>
+    let timer = null;
+    let clicks = 0;
 
+    speed.addEventListener("input", () => {
+      speedText.textContent = speed.value + " ms";
 
-<script>
+      if (timer !== null) {
+        runClicker();
+      }
+    });
 
-const cpsInput =
-    document.getElementById("cps");
+    function performClick() {
+      const button = mode.value === "right" ? 2 : 0;
 
-const buttonType =
-    document.getElementById("buttonType");
-
-const clickType =
-    document.getElementById("clickType");
-
-const startButton =
-    document.getElementById("start");
-
-const stopButton =
-    document.getElementById("stop");
-
-const resetButton =
-    document.getElementById("reset");
-
-const status =
-    document.getElementById("status");
-
-const clickCount =
-    document.getElementById("clickCount");
-
-const currentCps =
-    document.getElementById("currentCps");
-
-const testArea =
-    document.getElementById("testArea");
-
-const target =
-    document.getElementById("target");
-
-
-let running = false;
-let timer = null;
-let clicks = 0;
-
-
-/* Get CPS between 1 and 1000 */
-
-function getCPS() {
-
-    let value =
-        Number(cpsInput.value);
-
-    if (!Number.isFinite(value)) {
-        value = 10;
-    }
-
-    value =
-        Math.round(
-            Math.max(
-                1,
-                Math.min(
-                    1000,
-                    value
-                )
-            )
-        );
-
-    cpsInput.value = value;
-
-    currentCps.textContent = value;
-
-    return value;
-}
-
-
-/* Move target */
-
-function moveTarget() {
-
-    const padding = 10;
-
-    const maxX =
-        testArea.clientWidth -
-        target.offsetWidth -
-        padding;
-
-    const maxY =
-        testArea.clientHeight -
-        target.offsetHeight -
-        padding;
-
-    target.style.left =
-        (
-            padding +
-            Math.random() *
-            Math.max(0, maxX - padding)
-        ) + "px";
-
-    target.style.top =
-        (
-            padding +
-            Math.random() *
-            Math.max(0, maxY - padding)
-        ) + "px";
-}
-
-
-/* Actual test click */
-
-target.addEventListener(
-    "click",
-    function(event) {
-
-        clicks++;
-
-        clickCount.textContent =
-            clicks.toLocaleString();
-
-        moveTarget();
-
-    }
-);
-
-
-/* Generate a browser click */
-
-function doClick() {
-
-    const button =
-        buttonType.value;
-
-    let mouseButton = 0;
-
-    if (button === "right") {
-        mouseButton = 2;
-    }
-
-    if (button === "middle") {
-        mouseButton = 1;
-    }
-
-    const eventOptions = {
+      const event = new MouseEvent("click", {
         bubbles: true,
         cancelable: true,
         view: window,
-        button: mouseButton,
-        buttons: 0,
-        clientX:
-            target.getBoundingClientRect().left +
-            target.offsetWidth / 2,
-        clientY:
-            target.getBoundingClientRect().top +
-            target.offsetHeight / 2
-    };
+        button: button
+      });
 
-
-    if (clickType.value === "double") {
-
-        target.dispatchEvent(
-            new MouseEvent(
-                "dblclick",
-                eventOptions
-            )
-        );
-
-        clicks += 2;
-
-    } else {
-
-        target.dispatchEvent(
-            new MouseEvent(
-                "click",
-                eventOptions
-            )
-        );
-
+      test.dispatchEvent(event);
     }
 
-    clickCount.textContent =
-        clicks.toLocaleString();
+    function runClicker() {
+      clearInterval(timer);
 
-}
+      timer = setInterval(() => {
+        performClick();
+      }, Number(speed.value));
 
-
-/* Start */
-
-function start() {
-
-    if (running) {
-        return;
+      status.textContent = "Status: Running";
+      status.style.color = "#86efac";
     }
 
-    const cps = getCPS();
+    start.addEventListener("click", () => {
+      if (timer !== null) return;
 
-    running = true;
+      runClicker();
+    });
 
-    status.textContent =
-        "● ON";
+    stop.addEventListener("click", () => {
+      clearInterval(timer);
+      timer = null;
 
-    status.classList.add("on");
+      status.textContent = "Status: Stopped";
+      status.style.color = "white";
+    });
 
-    timer =
-        setInterval(
-            doClick,
-            Math.max(
-                1,
-                1000 / cps
-            )
-        );
-}
+    test.addEventListener("click", () => {
+      clicks++;
+      counter.textContent = clicks;
+    });
 
-
-/* Stop */
-
-function stop() {
-
-    running = false;
-
-    if (timer !== null) {
-
-        clearInterval(timer);
-
-        timer = null;
-    }
-
-    status.textContent =
-        "● OFF";
-
-    status.classList.remove("on");
-}
-
-
-/* Reset */
-
-function reset() {
-
-    stop();
-
-    clicks = 0;
-
-    clickCount.textContent =
-        "0";
-
-    moveTarget();
-}
-
-
-/* Buttons */
-
-startButton.onclick = start;
-
-stopButton.onclick = stop;
-
-resetButton.onclick = reset;
-
-
-/* Update CPS display */
-
-cpsInput.addEventListener(
-    "input",
-    getCPS
-);
-
-
-/* G keyboard shortcut */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key === "g" ||
-            event.key === "G"
-        ) {
-
-            if (
-                event.target.tagName === "INPUT" ||
-                event.target.tagName === "TEXTAREA"
-            ) {
-                return;
-            }
-
-            event.preventDefault();
-
-            if (running) {
-                stop();
-            } else {
-                start();
-            }
-
-        }
-
-    }
-);
-
-
-/* Initial target position */
-
-moveTarget();
-
-</script>
-
+    test.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+    });
+  </script>
 </body>
 </html>
-```
